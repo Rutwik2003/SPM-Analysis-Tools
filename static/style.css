@@ -1,0 +1,161 @@
+/* General styles */
+body {
+    background: linear-gradient(135deg, #74ebd5, #acb6e5);
+    min-height: 100vh;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Container */
+.container {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    animation: fadeIn 1s ease-in;
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Headings */
+h1 {
+    color: #2c3e50;
+    font-weight: 700;
+    animation: slideIn 0.8s ease-out;
+}
+
+h3 {
+    color: #34495e;
+    font-weight: 600;
+}
+
+/* Slide-in animation for headings */
+@keyframes slideIn {
+    from { opacity: 0; transform: translateX(-20px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+/* Form sections */
+.form-section {
+    background: #fff;
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-section:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.solar-section {
+    background: linear-gradient(135deg, #ffebcd, #ffd700);
+}
+
+.wind-section {
+    background: linear-gradient(135deg, #e0f7fa, #87ceeb);
+}
+
+/* Form inputs */
+.form-control {
+    border-radius: 8px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+}
+
+/* Buttons */
+.btn {
+    border-radius: 25px;
+    padding: 0.75rem 2rem;
+    font-weight: 600;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.btn-success {
+    background-color: #27ae60;
+    border: none;
+}
+
+.btn-success:hover {
+    background-color: #219653;
+    transform: scale(1.05);
+}
+
+.btn-primary {
+    background-color: #2980b9;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #2471a3;
+    transform: scale(1.05);
+}
+
+/* Alerts */
+.alert {
+    border-radius: 10px;
+    padding: 1rem;
+    font-weight: 500;
+    animation: popIn 0.5s ease-out;
+}
+
+.alert-info {
+    background: #d4edda;
+    color: #155724;
+}
+
+.alert-danger {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+/* Pop-in animation for alerts */
+@keyframes popIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+/* Tables */
+.table {
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    animation: fadeIn 1s ease-in;
+}
+
+.table th {
+    background: #34495e;
+    color: #fff;
+    padding: 1rem;
+}
+
+.table td {
+    padding: 0.75rem;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #f8f9fa;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .form-section {
+        margin-bottom: 2rem;
+    }
+    .btn {
+        width: 100%;
+    }
+    .table {
+        font-size: 0.9rem;
+    }
+}
