@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Wind, Sun, Plus, Minus, Calculator } from 'lucide-react';
 import { calculateROI, calculateNPVDetailed, calculateProductivity, calculateIRR } from '../utils/calculations';
 import toast from 'react-hot-toast';
+import PERTCalculator from './PERTCalculator';
+import PrecedenceNetwork from './PrecedenceNetwork';
 
 interface ProjectData {
   investment: number;
@@ -40,7 +42,7 @@ interface Results {
 }
 
 export default function ProjectForm() {
-  const [activeTab, setActiveTab] = useState<'renewable' | 'productivity'>('renewable');
+  const [activeTab, setActiveTab] = useState<'renewable' | 'productivity' | 'pert' | 'precedence'>('renewable');
   const [solarData, setSolarData] = useState<ProjectData>({
     investment: 0,
     annualCashflow: 0,
@@ -65,7 +67,6 @@ export default function ProjectForm() {
   const handleCalculate = (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Validation for Renewable Energy tab
     if (activeTab === 'renewable') {
       if (solarData.investment <= 0 || solarData.duration <= 0) {
         toast.error('Solar Project: Initial Investment and Duration must be greater than 0.');
@@ -94,7 +95,7 @@ export default function ProjectForm() {
         setResults({
           solar: solarResults,
           wind: windResults,
-          productivity: results?.productivity || undefined, // Preserve existing productivity results
+          productivity: results?.productivity || undefined,
         });
 
         toast.success('Renewable Energy calculations completed successfully!');
@@ -103,7 +104,6 @@ export default function ProjectForm() {
       }
     }
 
-    // Validation for Productivity tab
     if (activeTab === 'productivity') {
       const hasInvalidEntry = productivityEntries.some(entry => !entry.projectName || entry.sloc <= 0 || entry.workMonths <= 0);
       if (hasInvalidEntry) {
@@ -122,8 +122,8 @@ export default function ProjectForm() {
         const overallProductivity = calculateProductivity(totalSloc, totalWorkMonths);
 
         setResults({
-          solar: results?.solar || undefined, // Preserve existing solar results
-          wind: results?.wind || undefined,   // Preserve existing wind results
+          solar: results?.solar || undefined,
+          wind: results?.wind || undefined,
           productivity: {
             entries: productivityResults,
             totalSloc,
@@ -195,7 +195,7 @@ export default function ProjectForm() {
               Renewable Energy
             </button>
             <button
-              className={`px-6 py-2 rounded-r-lg ${
+              className={`px-6 py-2 ${
                 activeTab === 'productivity'
                   ? 'bg-blue-600 text-white'
                   : 'bg-gray-100 text-gray-700'
@@ -204,13 +204,32 @@ export default function ProjectForm() {
             >
               Productivity
             </button>
+            <button
+              className={`px-6 py-2 ${
+                activeTab === 'pert'
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-gray-100 text-gray-700'
+              }`}
+              onClick={() => setActiveTab('pert')}
+            >
+              PERT Evaluation
+            </button>
+            <button
+              className={`px-6 py-2 rounded-r-lg ${
+                activeTab === 'precedence'
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-gray-100 text-gray-700'
+              }`}
+              onClick={() => setActiveTab('precedence')}
+            >
+              Precedence Network
+            </button>
           </div>
 
           <form onSubmit={handleCalculate}>
             {activeTab === 'renewable' ? (
               <>
                 <div className="grid md:grid-cols-2 gap-8">
-                  {/* Solar Project Section */}
                   <div className="bg-gradient-to-br from-yellow-50 to-orange-100 p-6 rounded-lg">
                     <div className="flex items-center mb-4">
                       <Sun className="w-6 h-6 text-yellow-600 mr-2" />
@@ -284,7 +303,6 @@ export default function ProjectForm() {
                     </div>
                   </div>
 
-                  {/* Wind Project Section */}
                   <div className="bg-gradient-to-br from-blue-50 to-cyan-100 p-6 rounded-lg">
                     <div className="flex items-center mb-4">
                       <Wind className="w-6 h-6 text-blue-600 mr-2" />
@@ -359,10 +377,8 @@ export default function ProjectForm() {
                   </div>
                 </div>
 
-                {/* Renewable Energy Results */}
                 {results?.solar && results?.wind && (
                   <div className="mt-8 space-y-6">
-                    {/* Solar Results */}
                     <div className="bg-gradient-to-br from-yellow-50 to-orange-100 p-6 rounded-lg">
                       <h3 className="text-xl font-semibold mb-4">Solar Project Results</h3>
                       <div className="grid md:grid-cols-2 gap-4">
@@ -400,7 +416,6 @@ export default function ProjectForm() {
                       </div>
                     </div>
 
-                    {/* Wind Results */}
                     <div className="bg-gradient-to-br from-blue-50 to-cyan-100 p-6 rounded-lg">
                       <h3 className="text-xl font-semibold mb-4">Wind Project Results</h3>
                       <div className="grid md:grid-cols-2 gap-4">
@@ -438,7 +453,6 @@ export default function ProjectForm() {
                       </div>
                     </div>
 
-                    {/* Recommendation */}
                     {results.solar.npvLow.npv !== null && results.wind.npvLow.npv !== null && (
                       <div className="bg-blue-100 p-6 rounded-lg">
                         <h3 className="text-xl font-semibold mb-2">Recommendation</h3>
@@ -452,7 +466,7 @@ export default function ProjectForm() {
                   </div>
                 )}
               </>
-            ) : (
+            ) : activeTab === 'productivity' ? (
               <>
                 <div className="bg-gradient-to-br from-purple-50 to-pink-100 p-6 rounded-lg">
                   <h2 className="text-xl font-semibold mb-4">Productivity Analysis</h2>
@@ -508,7 +522,6 @@ export default function ProjectForm() {
                   </button>
                 </div>
 
-                {/* Productivity Results */}
                 {results?.productivity && (
                   <div className="mt-8 bg-gradient-to-br from-purple-50 to-pink-100 p-6 rounded-lg">
                     <h3 className="text-xl font-semibold mb-4">Productivity Results</h3>
@@ -542,17 +555,23 @@ export default function ProjectForm() {
                   </div>
                 )}
               </>
+            ) : activeTab === 'pert' ? (
+              <PERTCalculator />
+            ) : (
+              <PrecedenceNetwork />
             )}
 
-            <div className="mt-8 flex justify-center">
-              <button
-                type="submit"
-                className="flex items-center px-8 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
-              >
-                <Calculator className="w-5 h-5 mr-2" />
-                Calculate
-              </button>
-            </div>
+            {activeTab === 'renewable' || activeTab === 'productivity' ? (
+              <div className="mt-8 flex justify-center">
+                <button
+                  type="submit"
+                  className="flex items-center px-8 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+                >
+                  <Calculator className="w-5 h-5 mr-2" />
+                  Calculate
+                </button>
+              </div>
+            ) : null}
           </form>
         </div>
       </div>
