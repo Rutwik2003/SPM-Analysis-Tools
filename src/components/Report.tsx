@@ -11,6 +11,7 @@ const Report: React.FC = () => {
           className="text-indigo-600 hover:text-indigo-800 mr-4"
         >
           ← Back to Application
+        </Link>
       </div>
 
       <div className="bg-white shadow-lg rounded-lg p-6 mb-8">
