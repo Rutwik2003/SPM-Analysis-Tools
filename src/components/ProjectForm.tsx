@@ -176,303 +176,240 @@ export default function ProjectForm() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
-        <div className="bg-white rounded-lg shadow-xl p-6 md:p-8">
-          <h1 className="text-3xl font-bold text-center text-gray-900 mb-8">
-            Renewable Energy & Productivity Analysis
-          </h1>
-
-          <div className="flex justify-center mb-8">
+    <div className="container mx-auto px-2 sm:px-4 py-6 sm:py-8">
+      <div className="bg-white shadow-lg rounded-lg p-3 sm:p-6">
+        <div className="mb-6 overflow-x-auto">
+          <div className="flex flex-wrap sm:flex-nowrap justify-start sm:justify-center border-b min-w-max sm:min-w-0">
             <button
-              className={`px-6 py-2 rounded-l-lg ${
-                activeTab === 'renewable'
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-gray-100 text-gray-700'
-              }`}
+              type="button"
+              className={`px-3 sm:px-6 py-2 text-sm sm:text-base whitespace-nowrap ${activeTab === 'renewable' ? 'text-purple-600 border-b-2 border-purple-600 font-medium' : 'text-gray-500 hover:text-gray-700'}`}
               onClick={() => setActiveTab('renewable')}
             >
               Renewable Energy
             </button>
             <button
-              className={`px-6 py-2 ${
-                activeTab === 'productivity'
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-gray-100 text-gray-700'
-              }`}
+              type="button"
+              className={`px-3 sm:px-6 py-2 text-sm sm:text-base whitespace-nowrap ${activeTab === 'productivity' ? 'text-purple-600 border-b-2 border-purple-600 font-medium' : 'text-gray-500 hover:text-gray-700'}`}
               onClick={() => setActiveTab('productivity')}
             >
-              Productivity
+              Software Productivity
             </button>
             <button
-              className={`px-6 py-2 ${
-                activeTab === 'pert'
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-gray-100 text-gray-700'
-              }`}
+              type="button"
+              className={`px-3 sm:px-6 py-2 text-sm sm:text-base whitespace-nowrap ${activeTab === 'pert' ? 'text-purple-600 border-b-2 border-purple-600 font-medium' : 'text-gray-500 hover:text-gray-700'}`}
               onClick={() => setActiveTab('pert')}
             >
               PERT Evaluation
             </button>
             <button
-              className={`px-6 py-2 rounded-r-lg ${
-                activeTab === 'precedence'
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-gray-100 text-gray-700'
-              }`}
+              type="button"
+              className={`px-3 sm:px-6 py-2 text-sm sm:text-base whitespace-nowrap ${activeTab === 'precedence' ? 'text-purple-600 border-b-2 border-purple-600 font-medium' : 'text-gray-500 hover:text-gray-700'}`}
               onClick={() => setActiveTab('precedence')}
             >
               Precedence Network
             </button>
           </div>
+        </div>
 
-          <form onSubmit={handleCalculate}>
-            {activeTab === 'renewable' ? (
-              <>
-                <div className="grid md:grid-cols-2 gap-8">
-                  <div className="bg-gradient-to-br from-yellow-50 to-orange-100 p-6 rounded-lg">
-                    <div className="flex items-center mb-4">
-                      <Sun className="w-6 h-6 text-yellow-600 mr-2" />
-                      <h2 className="text-xl font-semibold">Solar Project</h2>
-                    </div>
-                    <div className="space-y-4">
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700">Initial Investment ($)</label>
-                        <input
-                          type="number"
-                          name="solar_investment"
-                          value={solarData.investment}
-                          onChange={handleSolarChange}
-                          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                          min="0"
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700">Annual Cash Flow ($)</label>
-                        <input
-                          type="number"
-                          name="solar_annualCashflow"
-                          value={solarData.annualCashflow}
-                          onChange={handleSolarChange}
-                          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700">Net Profit ($)</label>
-                        <input
-                          type="number"
-                          name="solar_netProfit"
-                          value={solarData.netProfit}
-                          onChange={handleSolarChange}
-                          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700">Duration (years)</label>
-                        <input
-                          type="number"
-                          name="solar_duration"
-                          value={solarData.duration}
-                          onChange={handleSolarChange}
-                          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                          min="1"
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700">Low Discount Rate (%)</label>
-                        <input
-                          type="number"
-                          name="solar_discountLow"
-                          value={solarData.discountLow}
-                          onChange={handleSolarChange}
-                          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                          min="0"
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700">High Discount Rate (%)</label>
-                        <input
-                          type="number"
-                          name="solar_discountHigh"
-                          value={solarData.discountHigh}
-                          onChange={handleSolarChange}
-                          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                          min="0"
-                        />
-                      </div>
-                    </div>
+        <form onSubmit={handleCalculate}>
+          {activeTab === 'renewable' ? (
+            <>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+                {/* Solar Project Column */}
+                <div className="space-y-4 sm:space-y-6">
+                  <div className="flex items-center">
+                    <Sun className="w-6 h-6 sm:w-7 sm:h-7 mr-2 sm:mr-3 text-yellow-500" />
+                    <h3 className="text-lg sm:text-xl font-semibold">Solar Project</h3>
                   </div>
-
-                  <div className="bg-gradient-to-br from-blue-50 to-cyan-100 p-6 rounded-lg">
-                    <div className="flex items-center mb-4">
-                      <Wind className="w-6 h-6 text-blue-600 mr-2" />
-                      <h2 className="text-xl font-semibold">Wind Project</h2>
+                  <div className="space-y-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700">Initial Investment ($)</label>
+                      <input
+                        type="number"
+                        name="solar_investment"
+                        value={solarData.investment}
+                        onChange={handleSolarChange}
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                        min="0"
+                      />
                     </div>
-                    <div className="space-y-4">
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700">Initial Investment ($)</label>
-                        <input
-                          type="number"
-                          name="wind_investment"
-                          value={windData.investment}
-                          onChange={handleWindChange}
-                          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                          min="0"
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700">Annual Cash Flow ($)</label>
-                        <input
-                          type="number"
-                          name="wind_annualCashflow"
-                          value={windData.annualCashflow}
-                          onChange={handleWindChange}
-                          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700">Net Profit ($)</label>
-                        <input
-                          type="number"
-                          name="wind_netProfit"
-                          value={windData.netProfit}
-                          onChange={handleWindChange}
-                          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700">Duration (years)</label>
-                        <input
-                          type="number"
-                          name="wind_duration"
-                          value={windData.duration}
-                          onChange={handleWindChange}
-                          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                          min="1"
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700">Low Discount Rate (%)</label>
-                        <input
-                          type="number"
-                          name="wind_discountLow"
-                          value={windData.discountLow}
-                          onChange={handleWindChange}
-                          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                          min="0"
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700">High Discount Rate (%)</label>
-                        <input
-                          type="number"
-                          name="wind_discountHigh"
-                          value={windData.discountHigh}
-                          onChange={handleWindChange}
-                          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                          min="0"
-                        />
-                      </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700">Annual Cash Flow ($)</label>
+                      <input
+                        type="number"
+                        name="solar_annualCashflow"
+                        value={solarData.annualCashflow}
+                        onChange={handleSolarChange}
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700">Net Profit ($)</label>
+                      <input
+                        type="number"
+                        name="solar_netProfit"
+                        value={solarData.netProfit}
+                        onChange={handleSolarChange}
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700">Duration (years)</label>
+                      <input
+                        type="number"
+                        name="solar_duration"
+                        value={solarData.duration}
+                        onChange={handleSolarChange}
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                        min="1"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700">Low Discount Rate (%)</label>
+                      <input
+                        type="number"
+                        name="solar_discountLow"
+                        value={solarData.discountLow}
+                        onChange={handleSolarChange}
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                        min="0"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700">High Discount Rate (%)</label>
+                      <input
+                        type="number"
+                        name="solar_discountHigh"
+                        value={solarData.discountHigh}
+                        onChange={handleSolarChange}
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                        min="0"
+                      />
                     </div>
                   </div>
                 </div>
-
-                {results?.solar && results?.wind && (
-                  <div className="mt-8 space-y-6">
-                    <div className="bg-gradient-to-br from-yellow-50 to-orange-100 p-6 rounded-lg">
-                      <h3 className="text-xl font-semibold mb-4">Solar Project Results</h3>
-                      <div className="grid md:grid-cols-2 gap-4">
-                        <div>
-                          <p className="font-medium">ROI: {results.solar.roi !== null ? results.solar.roi.toFixed(2) : 'N/A'}%</p>
-                          <p className="font-medium">IRR: {results.solar.irr !== null ? results.solar.irr.toFixed(2) : 'N/A'}%</p>
-                        </div>
-                        <div>
-                          <p className="font-medium">NPV (Low): ${results.solar.npvLow.npv !== null ? results.solar.npvLow.npv.toFixed(2) : 'N/A'}</p>
-                          <p className="font-medium">NPV (High): ${results.solar.npvHigh.npv !== null ? results.solar.npvHigh.npv.toFixed(2) : 'N/A'}</p>
-                        </div>
-                      </div>
-                      <div className="mt-4">
-                        <h4 className="font-medium mb-2">Yearly Breakdown (Low Discount)</h4>
-                        <div className="overflow-x-auto">
-                          <table className="min-w-full divide-y divide-gray-200">
-                            <thead>
-                              <tr>
-                                <th className="px-4 py-2">Year</th>
-                                <th className="px-4 py-2">Discount Factor</th>
-                                <th className="px-4 py-2">Discounted Cash Flow</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {results.solar.npvLow.yearlyData.map(([year, factor, cashflow]: [number, number, number]) => (
-                                <tr key={year}>
-                                  <td className="px-4 py-2">{year}</td>
-                                  <td className="px-4 py-2">{factor}</td>
-                                  <td className="px-4 py-2">${cashflow}</td>
-                                </tr>
-                              ))}
-                            </tbody>
-                          </table>
-                        </div>
-                      </div>
+                
+                {/* Wind Project Column */}
+                <div className="space-y-4 sm:space-y-6">
+                  <div className="flex items-center">
+                    <Wind className="w-6 h-6 sm:w-7 sm:h-7 mr-2 sm:mr-3 text-blue-500" />
+                    <h3 className="text-lg sm:text-xl font-semibold">Wind Project</h3>
+                  </div>
+                  <div className="space-y-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700">Initial Investment ($)</label>
+                      <input
+                        type="number"
+                        name="wind_investment"
+                        value={windData.investment}
+                        onChange={handleWindChange}
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                        min="0"
+                      />
                     </div>
-
-                    <div className="bg-gradient-to-br from-blue-50 to-cyan-100 p-6 rounded-lg">
-                      <h3 className="text-xl font-semibold mb-4">Wind Project Results</h3>
-                      <div className="grid md:grid-cols-2 gap-4">
-                        <div>
-                          <p className="font-medium">ROI: {results.wind.roi !== null ? results.wind.roi.toFixed(2) : 'N/A'}%</p>
-                          <p className="font-medium">IRR: {results.wind.irr !== null ? results.wind.irr.toFixed(2) : 'N/A'}%</p>
-                        </div>
-                        <div>
-                          <p className="font-medium">NPV (Low): ${results.wind.npvLow.npv !== null ? results.wind.npvLow.npv.toFixed(2) : 'N/A'}</p>
-                          <p className="font-medium">NPV (High): ${results.wind.npvHigh.npv !== null ? results.wind.npvHigh.npv.toFixed(2) : 'N/A'}</p>
-                        </div>
-                      </div>
-                      <div className="mt-4">
-                        <h4 className="font-medium mb-2">Yearly Breakdown (Low Discount)</h4>
-                        <div className="overflow-x-auto">
-                          <table className="min-w-full divide-y divide-gray-200">
-                            <thead>
-                              <tr>
-                                <th className="px-4 py-2">Year</th>
-                                <th className="px-4 py-2">Discount Factor</th>
-                                <th className="px-4 py-2">Discounted Cash Flow</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {results.wind.npvLow.yearlyData.map(([year, factor, cashflow]: [number, number, number]) => (
-                                <tr key={year}>
-                                  <td className="px-4 py-2">{year}</td>
-                                  <td className="px-4 py-2">{factor}</td>
-                                  <td className="px-4 py-2">${cashflow}</td>
-                                </tr>
-                              ))}
-                            </tbody>
-                          </table>
-                        </div>
-                      </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700">Annual Cash Flow ($)</label>
+                      <input
+                        type="number"
+                        name="wind_annualCashflow"
+                        value={windData.annualCashflow}
+                        onChange={handleWindChange}
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                      />
                     </div>
-
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700">Net Profit ($)</label>
+                      <input
+                        type="number"
+                        name="wind_netProfit"
+                        value={windData.netProfit}
+                        onChange={handleWindChange}
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700">Duration (years)</label>
+                      <input
+                        type="number"
+                        name="wind_duration"
+                        value={windData.duration}
+                        onChange={handleWindChange}
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                        min="1"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700">Low Discount Rate (%)</label>
+                      <input
+                        type="number"
+                        name="wind_discountLow"
+                        value={windData.discountLow}
+                        onChange={handleWindChange}
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                        min="0"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700">High Discount Rate (%)</label>
+                      <input
+                        type="number"
+                        name="wind_discountHigh"
+                        value={windData.discountHigh}
+                        onChange={handleWindChange}
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                        min="0"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              {results?.solar && results?.wind && (
+                <div className="mt-6 sm:mt-8 bg-gradient-to-br from-purple-50 to-pink-100 p-3 sm:p-6 rounded-lg">
+                  <h3 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4">Result Comparison</h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 overflow-x-auto">
+                    <div>
+                      <h4 className="font-medium text-sm sm:text-base mb-2">Solar Project</h4>
+                      <ul className="space-y-1 text-xs sm:text-sm">
+                        <li>ROI: {results.solar.roi !== null ? results.solar.roi.toFixed(2) : 'N/A'}%</li>
+                        <li>IRR: {results.solar.irr !== null ? results.solar.irr.toFixed(2) : 'N/A'}%</li>
+                        <li>NPV (Low): ${results.solar.npvLow.npv !== null ? results.solar.npvLow.npv.toFixed(2) : 'N/A'}</li>
+                        <li>NPV (High): ${results.solar.npvHigh.npv !== null ? results.solar.npvHigh.npv.toFixed(2) : 'N/A'}</li>
+                      </ul>
+                    </div>
+                    <div>
+                      <h4 className="font-medium text-sm sm:text-base mb-2">Wind Project</h4>
+                      <ul className="space-y-1 text-xs sm:text-sm">
+                        <li>ROI: {results.wind.roi !== null ? results.wind.roi.toFixed(2) : 'N/A'}%</li>
+                        <li>IRR: {results.wind.irr !== null ? results.wind.irr.toFixed(2) : 'N/A'}%</li>
+                        <li>NPV (Low): ${results.wind.npvLow.npv !== null ? results.wind.npvLow.npv.toFixed(2) : 'N/A'}</li>
+                        <li>NPV (High): ${results.wind.npvHigh.npv !== null ? results.wind.npvHigh.npv.toFixed(2) : 'N/A'}</li>
+                      </ul>
+                    </div>
                     {results.solar.npvLow.npv !== null && results.wind.npvLow.npv !== null && (
-                      <div className="bg-blue-100 p-6 rounded-lg">
-                        <h3 className="text-xl font-semibold mb-2">Recommendation</h3>
-                        <p className="text-lg">
+                      <div className="bg-white p-3 rounded-lg shadow-sm">
+                        <h4 className="font-medium text-sm sm:text-base mb-2">Recommendation</h4>
+                        <p className="text-xs sm:text-sm">
                           {results.solar.npvLow.npv > results.wind.npvLow.npv
-                            ? `Select the Solar Project. It has a higher NPV of $${results.solar.npvLow.npv.toFixed(2)} at ${solarData.discountLow}%.`
-                            : `Select the Wind Project. It has a higher NPV of $${results.wind.npvLow.npv.toFixed(2)} at ${windData.discountLow}%.`}
+                            ? `Solar Project is preferred with higher NPV of $${results.solar.npvLow.npv.toFixed(2)}`
+                            : `Wind Project is preferred with higher NPV of $${results.wind.npvLow.npv.toFixed(2)}`}
                         </p>
                       </div>
                     )}
                   </div>
-                )}
-              </>
-            ) : activeTab === 'productivity' ? (
-              <>
-                <div className="bg-gradient-to-br from-purple-50 to-pink-100 p-6 rounded-lg">
-                  <h2 className="text-xl font-semibold mb-4">Productivity Analysis</h2>
+                </div>
+              )}
+            </>
+          ) : activeTab === 'productivity' ? (
+            <>
+              <div className="space-y-4 sm:space-y-6">
+                <h3 className="text-lg sm:text-xl font-semibold">Software Productivity Analysis</h3>
+                <p className="text-gray-700 text-sm sm:text-base">Add projects to calculate and compare software productivity metrics.</p>
+                
+                <div className="space-y-4">
                   {productivityEntries.map((entry, index) => (
-                    <div key={index} className="grid md:grid-cols-4 gap-4 mb-4">
-                      <div>
+                    <div key={index} className="flex flex-wrap md:flex-nowrap gap-4 p-3 sm:p-4 border rounded-lg bg-gray-50">
+                      <div className="w-full md:w-2/5">
                         <label className="block text-sm font-medium text-gray-700">Project Name</label>
                         <input
                           type="text"
@@ -481,7 +418,7 @@ export default function ProjectForm() {
                           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
                         />
                       </div>
-                      <div>
+                      <div className="w-full md:w-1/5">
                         <label className="block text-sm font-medium text-gray-700">SLOC</label>
                         <input
                           type="number"
@@ -491,7 +428,7 @@ export default function ProjectForm() {
                           min="0"
                         />
                       </div>
-                      <div>
+                      <div className="w-full md:w-1/5">
                         <label className="block text-sm font-medium text-gray-700">Work-Months</label>
                         <input
                           type="number"
@@ -506,6 +443,7 @@ export default function ProjectForm() {
                           type="button"
                           onClick={() => removeProductivityEntry(index)}
                           className="px-3 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+                          disabled={productivityEntries.length <= 1}
                         >
                           <Minus className="w-4 h-4" />
                         </button>
@@ -515,7 +453,7 @@ export default function ProjectForm() {
                   <button
                     type="button"
                     onClick={addProductivityEntry}
-                    className="flex items-center justify-center w-full py-2 mt-4 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
+                    className="flex items-center justify-center w-full py-2 mt-4 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors text-sm sm:text-base"
                   >
                     <Plus className="w-4 h-4 mr-2" />
                     Add Project
@@ -523,57 +461,57 @@ export default function ProjectForm() {
                 </div>
 
                 {results?.productivity && (
-                  <div className="mt-8 bg-gradient-to-br from-purple-50 to-pink-100 p-6 rounded-lg">
-                    <h3 className="text-xl font-semibold mb-4">Productivity Results</h3>
-                    <div className="overflow-x-auto">
+                  <div className="mt-6 sm:mt-8 bg-gradient-to-br from-purple-50 to-pink-100 p-3 sm:p-6 rounded-lg">
+                    <h3 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4">Productivity Results</h3>
+                    <div className="overflow-x-auto -mx-3 sm:mx-0">
                       <table className="min-w-full divide-y divide-gray-200">
-                        <thead>
+                        <thead className="bg-gray-50">
                           <tr>
-                            <th className="px-4 py-2">Project</th>
-                            <th className="px-4 py-2">SLOC</th>
-                            <th className="px-4 py-2">Work-Months</th>
-                            <th className="px-4 py-2">Productivity</th>
+                            <th className="px-2 sm:px-4 py-2 text-xs sm:text-sm font-medium text-gray-700">Project</th>
+                            <th className="px-2 sm:px-4 py-2 text-xs sm:text-sm font-medium text-gray-700">SLOC</th>
+                            <th className="px-2 sm:px-4 py-2 text-xs sm:text-sm font-medium text-gray-700">Work-Months</th>
+                            <th className="px-2 sm:px-4 py-2 text-xs sm:text-sm font-medium text-gray-700">Productivity</th>
                           </tr>
                         </thead>
                         <tbody>
                           {results.productivity.entries.map((entry, index) => (
-                            <tr key={index}>
-                              <td className="px-4 py-2">{entry.projectName}</td>
-                              <td className="px-4 py-2">{entry.sloc}</td>
-                              <td className="px-4 py-2">{entry.workMonths}</td>
-                              <td className="px-4 py-2">{entry.productivity.toFixed(2)}</td>
+                            <tr key={index} className="bg-white hover:bg-gray-50">
+                              <td className="px-2 sm:px-4 py-2 text-xs sm:text-sm">{entry.projectName}</td>
+                              <td className="px-2 sm:px-4 py-2 text-xs sm:text-sm">{entry.sloc}</td>
+                              <td className="px-2 sm:px-4 py-2 text-xs sm:text-sm">{entry.workMonths}</td>
+                              <td className="px-2 sm:px-4 py-2 text-xs sm:text-sm">{entry.productivity.toFixed(2)}</td>
                             </tr>
                           ))}
                         </tbody>
                       </table>
                     </div>
-                    <div className="mt-4 grid md:grid-cols-3 gap-4">
+                    <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 sm:gap-4 text-xs sm:text-sm">
                       <p className="font-medium">Total SLOC: {results.productivity.totalSloc}</p>
                       <p className="font-medium">Total Work-Months: {results.productivity.totalWorkMonths}</p>
                       <p className="font-medium">Overall Productivity: {results.productivity.overallProductivity.toFixed(2)}</p>
                     </div>
                   </div>
                 )}
-              </>
-            ) : activeTab === 'pert' ? (
-              <PERTCalculator />
-            ) : (
-              <PrecedenceNetwork />
-            )}
-
-            {activeTab === 'renewable' || activeTab === 'productivity' ? (
-              <div className="mt-8 flex justify-center">
-                <button
-                  type="submit"
-                  className="flex items-center px-8 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
-                >
-                  <Calculator className="w-5 h-5 mr-2" />
-                  Calculate
-                </button>
               </div>
-            ) : null}
-          </form>
-        </div>
+            </>
+          ) : activeTab === 'pert' ? (
+            <PERTCalculator />
+          ) : (
+            <PrecedenceNetwork />
+          )}
+
+          {activeTab === 'renewable' || activeTab === 'productivity' ? (
+            <div className="mt-6 sm:mt-8 flex justify-center">
+              <button
+                type="submit"
+                className="flex items-center px-6 sm:px-8 py-2 sm:py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-sm sm:text-base"
+              >
+                <Calculator className="w-4 h-4 sm:w-5 sm:h-5 mr-1 sm:mr-2" />
+                Calculate
+              </button>
+            </div>
+          ) : null}
+        </form>
       </div>
     </div>
   );

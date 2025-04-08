@@ -5,151 +5,144 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SPM Analysis Tools Project Report</title>
     <style>
+        :root {
+            --primary-color: #6d28d9; /* Purple-600 */
+            --primary-light: #8b5cf6; /* Purple-500 */
+            --primary-dark: #4c1d95; /* Purple-800 */
+            --secondary-color: #4f46e5; /* Indigo-600 */
+            --secondary-light: #6366f1; /* Indigo-500 */
+            --secondary-dark: #3730a3; /* Indigo-800 */
+            --text-primary: #1f2937; /* Gray-800 */
+            --text-secondary: #4b5563; /* Gray-600 */
+            --background-light: #f9fafb; /* Gray-50 */
+            --shadow-color: rgba(0, 0, 0, 0.1);
+        }
+        
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 12pt;
             line-height: 1.6;
-            max-width: 100%;
+            max-width: 900px;
             margin: 0 auto;
             padding: 20px;
-            color: #333;
-            position: relative;
+            text-align: justify;
+            color: var(--text-primary);
+            background-color: white;
         }
         
-        @media (min-width: 992px) {
-            body {
-                max-width: 800px;
-            }
-        }
         h1 {
+            font-size: 16pt;
             text-align: center;
-            color: #2c3e50;
-            margin-bottom: 30px;
+            margin: 30px 0;
+            color: #000000;
+            border-bottom: 2px solid var(--primary-light);
             padding-bottom: 10px;
-            border-bottom: 2px solid #3498db;
-            font-size: 28px;
         }
         
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 24px;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            h1 {
-                font-size: 20px;
-                margin-bottom: 20px;
-            }
-        }
         h2 {
-            color: #2980b9;
-            margin-top: 30px;
-            padding-bottom: 5px;
-            border-bottom: 1px solid #ddd;
+            font-size: 14pt;
+            margin: 25px 0 15px 0;
+            color: #000000;
+            border-left: 3px solid var(--primary-color);
+            padding-left: 10px;
         }
+        
         h3 {
-            color: #3498db;
-        }
-        code {
-            background-color: #f8f8f8;
-            border: 1px solid #ddd;
-            border-radius: 3px;
-            padding: 2px 4px;
-            font-family: Consolas, Monaco, 'Andale Mono', monospace;
-            font-size: 0.9em;
-        }
-        pre {
-            background-color: #f8f8f8;
-            border: 1px solid #ddd;
-            border-radius: 3px;
-            padding: 10px;
-            overflow-x: auto;
-            max-width: 100%;
-            font-size: 0.85em;
+            font-size: 12pt;
+            font-weight: bold;
+            margin: 20px 0 10px 0;
+            color: #000000;
         }
         
-        @media (max-width: 480px) {
-            code, pre {
-                font-size: 0.8em;
-            }
+        p {
+            margin: 12px 0;
+            line-height: 1.7;
         }
+        
+        a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+        
+        a:hover {
+            color: var(--primary-color);
+            text-decoration: underline;
+        }
+        
         ul, ol {
-            margin-left: 20px;
+            padding-left: 25px;
+            margin: 15px 0;
         }
-        img {
+        
+        li {
+            margin-bottom: 6px;
+        }
+        
+        code {
+            font-family: Consolas, Monaco, 'Courier New', monospace;
+            background-color: var(--background-light);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 11pt;
+            border: 1px solid rgba(107, 114, 128, 0.1);
+            color: var(--primary-dark);
+        }
+        
+        pre {
+            background: linear-gradient(to right, rgba(107, 33, 168, 0.02), rgba(79, 70, 229, 0.02));
+            border-left: 3px solid var(--primary-light);
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin: 20px 0;
+            box-shadow: 0 2px 5px var(--shadow-color);
+        }
+        
+        .screenshot {
+            display: block;
             max-width: 100%;
             height: auto;
-            display: block;
-            margin: 20px auto;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        .screenshot {
-            width: 100%;
-            max-width: 650px;
-            height: auto;
-            max-height: 450px;
-            object-fit: contain;
-            background-color: #f5f5f5;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            margin: 15px auto;
-            display: block;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            margin: 25px auto;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
             cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 6px var(--shadow-color);
         }
         
-        @media (max-width: 768px) {
-            .screenshot {
-                max-height: 350px;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .screenshot {
-                max-height: 250px;
-            }
-        }
         .screenshot:hover {
-            transform: scale(1.02);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px var(--shadow-color);
         }
         
         /* Modal/Lightbox styles */
-        .modal {
-            display: none;
+        .modal-container {
             position: fixed;
             z-index: 1000;
-            left: 0;
             top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            overflow: hidden;
-            background-color: rgba(0,0,0,0.92);
-            transition: 0.3s;
-        }
-        
-        .modal-container {
+            background-color: rgba(30, 27, 75, 0.85);
+            padding: 20px;
+            box-sizing: border-box;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-            height: 100%;
-            width: 100%;
-            position: relative;
+            backdrop-filter: blur(3px);
         }
         
         .modal-content {
             max-width: 85%;
             max-height: 80vh;
             object-fit: contain;
-            border-radius: 4px;
-            box-shadow: 0 5px 25px rgba(0,0,0,0.5);
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,255,255,0.1);
             transition: transform 0.1s ease-out;
             cursor: zoom-in;
             margin: 0 auto;
+            border: 2px solid rgba(255,255,255,0.15);
         }
         
         .modal-content.zoomed {
@@ -158,14 +151,14 @@
         
         .close {
             position: absolute;
-            top: 15px;
+            top: 20px;
             right: 25px;
             color: #ffffff;
-            font-size: 35px;
+            font-size: 28px;
             font-weight: bold;
             cursor: pointer;
             z-index: 1001;
-            background-color: rgba(0,0,0,0.4);
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             width: 40px;
             height: 40px;
             border-radius: 50%;
@@ -173,78 +166,197 @@
             justify-content: center;
             align-items: center;
             line-height: 1;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: transform 0.2s ease, background-color 0.2s ease;
         }
         
         .close:hover {
-            background-color: rgba(255,0,0,0.5);
             transform: scale(1.1);
+            background: linear-gradient(135deg, var(--primary-light), var(--secondary-light));
         }
-
+        
         .zoom-controls {
+            position: fixed;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(to right, var(--primary-dark), var(--secondary-dark));
+            border-radius: 8px;
+            padding: 10px 20px;
+            z-index: 1001;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.25);
+            border: 1px solid rgba(255,255,255,0.15);
+            backdrop-filter: blur(4px);
             display: flex;
             justify-content: center;
-            margin-top: 15px;
+            align-items: center;
             gap: 15px;
         }
 
         .zoom-btn {
-            background-color: rgba(255,255,255,0.2);
-            color: white;
+            background: none;
             border: none;
-            padding: 8px 15px;
-            border-radius: 20px;
-            cursor: pointer;
+            color: white;
             font-size: 14px;
-            transition: background-color 0.2s;
+            cursor: pointer;
             display: flex;
             align-items: center;
+            transition: all 0.2s ease;
+            padding: 5px 10px;
         }
-
+        
         .zoom-btn:hover {
-            background-color: rgba(255,255,255,0.3);
+            text-shadow: 0 0 8px rgba(255,255,255,0.5);
         }
 
         .zoom-icon {
-            margin-right: 6px;
+            margin-right: 8px;
             font-size: 16px;
         }
-        .info-table {
+        
+        .image-caption {
+            text-align: center;
+            font-style: italic;
+            color: var(--text-secondary);
+            margin-top: 8px;
+            margin-bottom: 25px;
+            font-size: 11pt;
+        }
+        
+        table {
             width: 100%;
             border-collapse: collapse;
-            margin: 20px 0;
-            table-layout: fixed;
+            margin: 25px 0;
+            font-size: 12pt;
+            box-shadow: 0 2px 5px var(--shadow-color);
+            border-radius: 8px;
+            overflow: hidden;
         }
-        .info-table th, .info-table td {
-            padding: 10px;
-            border: 1px solid #ddd;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-        }
-        .info-table th {
-            background-color: #f2f2f2;
+        
+        th, td {
+            border: 1px solid #e5e7eb;
+            padding: 10px 15px;
             text-align: left;
-            width: 30%;
+        }
+        
+        th {
+            background: linear-gradient(to right, var(--primary-light), var(--secondary-light));
+            color: white;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 11pt;
+            letter-spacing: 0.5px;
+        }
+        
+        tr:nth-child(even) {
+            background-color: var(--background-light);
+        }
+        
+        tr:hover {
+            background-color: rgba(107, 33, 168, 0.05);
+        }
+        
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+                font-size: 11pt;
+            }
+            
+            h1 {
+                font-size: 15pt;
+                margin: 20px 0;
+                color: #000000;
+            }
+            
+            h2 {
+                font-size: 13pt;
+                margin: 18px 0 12px 0;
+                color: #000000;
+            }
+            
+            h3 {
+                font-size: 11pt;
+                color: #000000;
+            }
+            
+            table {
+                font-size: 11pt;
+            }
+            
+            th {
+                padding: 8px;
+            }
+            
+            pre {
+                padding: 10px;
+            }
+            
+            .zoom-controls {
+                padding: 8px 15px;
+            }
+            
+            .zoom-btn {
+                font-size: 12px;
+            }
         }
         
         @media (max-width: 480px) {
-            .info-table th, .info-table td {
-                padding: 6px;
-                font-size: 0.9em;
+            body {
+                padding: 10px;
+                font-size: 10pt;
             }
-            .info-table th {
-                width: 40%;
+            
+            h1 {
+                font-size: 14pt;
+                margin: 15px 0;
+            }
+            
+            h2 {
+                font-size: 12pt;
+                color: #000000;
+            }
+            
+            table, th, td {
+                font-size: 10pt;
+                padding: 6px;
+            }
+            
+            .close {
+                top: 10px;
+                right: 10px;
+                width: 35px;
+                height: 35px;
+                font-size: 22px;
+            }
+            
+            .zoom-controls {
+                bottom: 15px;
+                padding: 6px 12px;
             }
         }
+        
+        /* Table-specific styles */
+        .info-table th {
+            width: 40%;
+        }
+        
+        .info-table tr:nth-child(odd) {
+            background-color: rgba(107, 33, 168, 0.05);
+        }
+        
         .placeholder {
             font-style: italic;
             color: #000000;
         }
+        
         .image-caption {
             text-align: center;
             font-style: italic;
             margin-top: -10px;
             margin-bottom: 20px;
-            color: #666;
+            color: #000000;
             font-size: 0.9em;
         }
         .date {
@@ -364,38 +476,54 @@ export const calculateProductivity = (sloc, workMonths) => {
     <h2>Inputs Used for Testing New Features</h2>
 
     <h3>Renewable Energy Analysis Input</h3>
-    <img src="assets/screenshots/Solar_Wind_project_input.png" alt="Renewable Energy Analysis Input Form" class="screenshot" onclick="openModal(this.src);">
-    <p class="image-caption">Input form for Solar and Wind project analysis with sample values</p>
+    <div class="image-container">
+        <img src="assets/screenshots/Solar_Wind_project_input.png" alt="Renewable Energy Analysis Input Form" class="screenshot">
+        <div class="image-caption">Input form for Solar and Wind project analysis with sample values</div>
+    </div>
 
     <h3>Productivity Analysis Input</h3>
-    <img src="assets/screenshots/Productivity_input.png" alt="Productivity Analysis Input Form" class="screenshot" onclick="openModal(this.src);">
-    <p class="image-caption">Productivity tracking form with sample project data input</p>
+    <div class="image-container">
+        <img src="assets/screenshots/Productivity_input.png" alt="Productivity Analysis Input Form" class="screenshot">
+        <div class="image-caption">Productivity tracking form with sample project data input</div>
+    </div>
 
     <h3>PERT Analysis Input</h3>
-    <img src="assets/screenshots/PERT Evaluation Input.png" alt="PERT Analysis Input Form" class="screenshot" onclick="openModal(this.src);">
-    <p class="image-caption">PERT calculator form with sample task time estimates</p>
+    <div class="image-container">
+        <img src="assets/screenshots/PERT Evaluation Input.png" alt="PERT Analysis Input Form" class="screenshot">
+        <div class="image-caption">PERT calculator form with sample task time estimates</div>
+    </div>
 
     <h2>Screenshots of the Output</h2>
 
     <h3>Renewable Energy Analysis Results</h3>
-    <img src="assets/screenshots/Solar_Wind_Project_Output.png" alt="Renewable Energy Analysis Results" class="screenshot" onclick="openModal(this.src);">
-    <p class="image-caption">Comparative results between Solar and Wind projects, including ROI, NPV, and IRR calculations</p>
+    <div class="image-container">
+        <img src="assets/screenshots/Solar_Wind_Project_Output.png" alt="Renewable Energy Analysis Results" class="screenshot">
+        <div class="image-caption">Comparative results between Solar and Wind projects, including ROI, NPV, and IRR calculations</div>
+    </div>
 
     <h3>Productivity Analysis Results</h3>
-    <img src="assets/screenshots/Productivity_output.png" alt="Productivity Analysis Results" class="screenshot" onclick="openModal(this.src);">
-    <p class="image-caption">Productivity metrics and comparison across multiple software projects</p>
+    <div class="image-container">
+        <img src="assets/screenshots/Productivity_output.png" alt="Productivity Analysis Results" class="screenshot">
+        <div class="image-caption">Productivity metrics and comparison across multiple software projects</div>
+    </div>
 
     <h3>PERT Analysis Results</h3>
-    <img src="assets/screenshots/PERT Evaluation Output.png" alt="PERT Analysis Results" class="screenshot" onclick="openModal(this.src);">
-    <p class="image-caption">Calculated expected times and variance based on PERT analysis</p>
+    <div class="image-container">
+        <img src="assets/screenshots/PERT Evaluation Output.png" alt="PERT Analysis Results" class="screenshot">
+        <div class="image-caption">Calculated expected times and variance based on PERT analysis</div>
+    </div>
 
     <h3>Precedence Network Input</h3>
-    <img src="assets/screenshots/Precedence_Network_input.png" alt="Precedence Network Input Form" class="screenshot" onclick="openModal(this.src);">
-    <p class="image-caption">Input form for creating a Precedence Network with task dependencies</p>
+    <div class="image-container">
+        <img src="assets/screenshots/Precedence_Network_input.png" alt="Precedence Network Input Form" class="screenshot">
+        <div class="image-caption">Input form for creating a Precedence Network with task dependencies</div>
+    </div>
 
     <h3>Precedence Network Output</h3>
-    <img src="assets/screenshots/Precedence_Network_output.png" alt="Precedence Network Visualization" class="screenshot" onclick="openModal(this.src);">
-    <p class="image-caption">Visual representation of task dependencies in a project network</p>
+    <div class="image-container">
+        <img src="assets/screenshots/Precedence_Network_output.png" alt="Precedence Network Visualization" class="screenshot">
+        <div class="image-caption">Visual representation of task dependencies in a project network</div>
+    </div>
 
     <h2>Source Code Repository</h2>
 
@@ -416,143 +544,106 @@ export const calculateProductivity = (sloc, workMonths) => {
     <ol>
         <li><strong>Precedence Network Diagram</strong> - Fixing and improving the visualization of the precedence network diagram to better represent task dependencies</li>
         <li><strong>PERT Evaluation Enhancement</strong> - Adding the diagram functionality for PERT analysis to visualize the critical path</li>
-        <li><strong>Integration with Project Management Tools</strong> - Adding API integration with tools like Jira, Trello, or Microsoft Project</li>
-        <li><strong>Machine Learning Integration</strong> - Implementing predictive analytics for better project estimations based on historical data</li>
-        <li><strong>Mobile Application</strong> - Developing a companion mobile app for on-the-go project management</li>
-        <li><strong>Multi-user Collaboration</strong> - Adding features for team collaboration and real-time updates</li>
-        <li><strong>Expanded Financial Analysis</strong> - Including more financial metrics for project evaluation</li>
-        <li><strong>Custom Dashboard</strong> - Creating a customizable dashboard for project managers to monitor multiple projects</li>
     </ol>
 
     <p>The primary immediate focus will be on fixing the Precedence Network diagram and adding the diagram for PERT Evaluation to enhance the project planning capabilities of the application.</p>
 
     <div class="date">Submitted on: April 8, 2025</div>
-    <!-- Image Modal/Lightbox -->
-    <div id="imageModal" class="modal">
+
+    <div id="imageModal" class="modal-container">
         <span class="close" onclick="closeModal()">&times;</span>
-        <div class="modal-container">
-            <img class="modal-content" id="modalImage">
-            <div class="zoom-controls">
-                <button class="zoom-btn" onclick="toggleZoom()">
-                    <span class="zoom-icon">🔍</span> Click to Zoom (Mouse Controls Pan)
-                </button>
-            </div>
+        <div class="modal-content" id="modalImage"></div>
+        <div class="zoom-controls">
+            <button class="zoom-btn" onclick="toggleZoom()">
+                <span class="zoom-icon">🔍</span>
+                Toggle Zoom
+            </button>
         </div>
     </div>
 
     <script>
         // Get the modal and related elements
-        var modal = document.getElementById('imageModal');
-        var modalContainer = document.querySelector('.modal-container');
-        var modalImage = document.getElementById('modalImage');
-        var zoomed = false;
-        var zoomLevel = 1.8; // Reduced zoom level for better view
-        var lastX = 0;
-        var lastY = 0;
-        
+        const modal = document.getElementById('imageModal');
+        modal.style.display = 'none'; // Initially hide the modal
+        const modalContainer = document.querySelector('.modal-container');
+        const modalImage = document.getElementById('modalImage');
+        let zoomed = false;
+        const zoomLevel = 1.8;
+        let lastX = 0;
+        let lastY = 0;
+
         // Open the modal with the clicked image
-        function openModal(src) {
-            modal.style.display = "block";
-            modalImage.src = src;
+        function openModal(img) {
+            const imgElement = document.createElement('img');
+            imgElement.src = img.src;
+            imgElement.style.maxWidth = '100%';
+            imgElement.style.height = 'auto';
+            modalImage.innerHTML = '';
+            modalImage.appendChild(imgElement);
+            modal.style.display = "flex";
             zoomed = false;
-            modalImage.style.transform = 'scale(1)';
-            modalImage.classList.remove('zoomed');
-            document.body.style.overflow = 'hidden'; // Prevent scrolling behind modal
+            document.body.style.overflow = 'hidden';
         }
-        
+
         // Close the modal
         function closeModal() {
             modal.style.display = "none";
-            document.body.style.overflow = 'auto'; // Re-enable scrolling
+            document.body.style.overflow = 'auto';
         }
-        
+
         // Toggle zoom function
         function toggleZoom() {
+            const img = modalImage.querySelector('img');
+            if (!img) return;
+
             if (zoomed) {
-                // Reset zoom
-                modalImage.style.transition = 'transform 0.2s';
-                modalImage.style.transform = 'scale(1)';
-                modalImage.classList.remove('zoomed');
+                img.style.transform = 'scale(1)';
                 zoomed = false;
             } else {
-                // Initial zoom (centered)
-                modalImage.style.transition = 'transform 0.2s';
-                modalImage.style.transform = 'scale(' + zoomLevel + ')';
-                modalImage.classList.add('zoomed');
+                img.style.transform = 'scale(' + zoomLevel + ')';
                 zoomed = true;
-                
-                // On any device, set initial position to center
-                const rect = modalImage.getBoundingClientRect();
-                const centerX = rect.left + rect.width / 2;
-                const centerY = rect.top + rect.height / 2;
-                
-                // Create a synthetic mousemove event at center
-                const centerEvent = new MouseEvent('mousemove', {
-                    clientX: centerX,
-                    clientY: centerY
-                });
-                modalImage.dispatchEvent(centerEvent);
             }
         }
-        
+
         // Handle mouse movement for dynamic zooming
         modalImage.addEventListener('mousemove', function(e) {
-            if (!zoomed) return;
-            
-            // Calculate the relative position within the image
-            const rect = modalImage.getBoundingClientRect();
+            const img = modalImage.querySelector('img');
+            if (!img || !zoomed) return;
+
+            const rect = img.getBoundingClientRect();
             const x = (e.clientX - rect.left) / rect.width;
             const y = (e.clientY - rect.top) / rect.height;
-            
-            // Calculate how much to move the image
-            // This improved approach keeps the point under your mouse cursor fixed
-            // Lower sensitivity means the image moves less with mouse movement
+
             const sensitivity = 0.5;
-            
-            // Calculate movement percentages from center
-            // Constrain the values to prevent image from moving too far off-screen
             const moveX = Math.max(Math.min((0.5 - x) * sensitivity, 0.25), -0.25) * 100;
             const moveY = Math.max(Math.min((0.5 - y) * sensitivity, 0.25), -0.25) * 100;
-            
-            // Create transition temporarily to avoid jerky movement on first hover
-            modalImage.style.transition = 'transform 0.05s';
-            modalImage.style.transform = `scale(${zoomLevel}) translate(${moveX}%, ${moveY}%)`;
-            
-            // Remove transition after initial movement for smoother tracking
-            setTimeout(() => {
-                modalImage.style.transition = 'none';
-            }, 50);
-            
-            // Store the position for touchscreen handling
-            lastX = e.clientX;
-            lastY = e.clientY;
+
+            img.style.transform = `scale(${zoomLevel}) translate(${moveX}%, ${moveY}%)`;
         });
-        
-        // Add image click to trigger zoom
-        modalImage.onclick = function(e) {
-            // Don't close the modal when clicking the image
-            e.stopPropagation();
-            toggleZoom();
-        };
-        
-        // Close modal when clicking the background (not the image)
+
+        // Close modal when clicking the background
         modalContainer.addEventListener('click', function(event) {
             if (event.target === modalContainer) {
                 closeModal();
             }
         });
-        
-        modal.addEventListener('click', function(event) {
-            if (event.target === modal) {
-                closeModal();
-            }
-        });
-        
+
         // Close when pressing Escape key
         document.addEventListener('keydown', function(event) {
             if (event.key === "Escape") {
                 closeModal();
             }
+        });
+
+        // Add click event listeners to all screenshots
+        document.addEventListener('DOMContentLoaded', function() {
+            const screenshots = document.querySelectorAll('.screenshot');
+            screenshots.forEach(function(img) {
+                img.addEventListener('click', function(e) {
+                    e.preventDefault(); // Prevent any default behavior
+                    openModal(this);
+                });
+            });
         });
     </script>
 </body>
