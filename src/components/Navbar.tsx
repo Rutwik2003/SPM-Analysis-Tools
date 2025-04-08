@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 // Import the chibi logo (you'll need to add this image to your project)
 
 const Navbar: React.FC = () => {
@@ -15,8 +16,13 @@ const Navbar: React.FC = () => {
             SPM Calculation Tools
           </h1>
         </div>
-        <div className="text-white text-sm">
-          <p>Made By Rutwik Butani</p>
+        <div className="flex items-center space-x-6">
+          <Link to="/report" className="text-white hover:text-indigo-200 font-medium px-4 py-2 rounded-lg bg-purple-700 hover:bg-purple-800 transition duration-200 shadow-md">
+            View Project Report
+          </Link>
+          <div className="text-white text-sm">
+            <p>Made By Rutwik Butani</p>
+          </div>
         </div>
       </div>
     </nav>

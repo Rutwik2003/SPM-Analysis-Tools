@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SPM Analysis Tools Project Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+            position: relative;
+        }
+        
+        @media (min-width: 992px) {
+            body {
+                max-width: 800px;
+            }
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #3498db;
+            font-size: 28px;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 24px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 20px;
+                margin-bottom: 20px;
+            }
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 30px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #ddd;
+        }
+        h3 {
+            color: #3498db;
+        }
+        code {
+            background-color: #f8f8f8;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            padding: 2px 4px;
+            font-family: Consolas, Monaco, 'Andale Mono', monospace;
+            font-size: 0.9em;
+        }
+        pre {
+            background-color: #f8f8f8;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            padding: 10px;
+            overflow-x: auto;
+            max-width: 100%;
+            font-size: 0.85em;
+        }
+        
+        @media (max-width: 480px) {
+            code, pre {
+                font-size: 0.8em;
+            }
+        }
+        ul, ol {
+            margin-left: 20px;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 20px auto;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .screenshot {
+            width: 100%;
+            max-width: 650px;
+            height: auto;
+            max-height: 450px;
+            object-fit: contain;
+            background-color: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin: 15px auto;
+            display: block;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        @media (max-width: 768px) {
+            .screenshot {
+                max-height: 350px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .screenshot {
+                max-height: 250px;
+            }
+        }
+        .screenshot:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        
+        /* Modal/Lightbox styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: rgba(0,0,0,0.92);
+            transition: 0.3s;
+        }
+        
+        .modal-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            width: 100%;
+            position: relative;
+        }
+        
+        .modal-content {
+            max-width: 85%;
+            max-height: 80vh;
+            object-fit: contain;
+            border-radius: 4px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.5);
+            transition: transform 0.1s ease-out;
+            cursor: zoom-in;
+            margin: 0 auto;
+        }
+        
+        .modal-content.zoomed {
+            cursor: move;
+        }
+        
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 25px;
+            color: #ffffff;
+            font-size: 35px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 1001;
+            background-color: rgba(0,0,0,0.4);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            line-height: 1;
+        }
+        
+        .close:hover {
+            background-color: rgba(255,0,0,0.5);
+            transform: scale(1.1);
+        }
+
+        .zoom-controls {
+            display: flex;
+            justify-content: center;
+            margin-top: 15px;
+            gap: 15px;
+        }
+
+        .zoom-btn {
+            background-color: rgba(255,255,255,0.2);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.2s;
+            display: flex;
+            align-items: center;
+        }
+
+        .zoom-btn:hover {
+            background-color: rgba(255,255,255,0.3);
+        }
+
+        .zoom-icon {
+            margin-right: 6px;
+            font-size: 16px;
+        }
+        .info-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            table-layout: fixed;
+        }
+        .info-table th, .info-table td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+        .info-table th {
+            background-color: #f2f2f2;
+            text-align: left;
+            width: 30%;
+        }
+        
+        @media (max-width: 480px) {
+            .info-table th, .info-table td {
+                padding: 6px;
+                font-size: 0.9em;
+            }
+            .info-table th {
+                width: 40%;
+            }
+        }
+        .placeholder {
+            font-style: italic;
+            color: #000000;
+        }
+        .image-caption {
+            text-align: center;
+            font-style: italic;
+            margin-top: -10px;
+            margin-bottom: 20px;
+            color: #666;
+            font-size: 0.9em;
+        }
+        .date {
+            text-align: right;
+            margin-top: 20px;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <h1>SPM Analysis Tools Project Report</h1>
+
+    <table class="info-table placeholder">
+        <tr>
+            <th>Project Title</th>
+            <td>Software Project Management Analysis Tools</td>
+        </tr>
+        <tr>
+            <th>Student Name(s)</th>
+            <td><span class="placeholder">Rutwik Butani</span></td>
+        </tr>
+        <tr>
+            <th>Enrollment No(s)</th>
+            <td><span class="placeholder">202203103510304</span></td>
+        </tr>
+        <tr>
+            <th>Course & Semester, Division</th>
+            <td>Software Project Management (SPM)<br><span class="placeholder">6 - D </span></td>
+        </tr>
+        <tr class="placeholder">
+            <th>Branch</th>
+            <td><span class="placeholder">B. Tech Computer Engineering (Software Engineering) </span></td>
+        </tr>
+        <tr>
+            <th>Submission Date</th>
+            <td>April 8, 2025</td>
+        </tr>
+    </table>
+
+    <h2>Objective</h2>
+    <p>The objective of this project is to develop a comprehensive suite of Software Project Management analysis tools that assist project managers in making informed decisions about project planning, resource allocation, and cost management. The application provides:</p>
+    <ol>
+        <li><strong>Renewable Energy Project Analysis</strong> - To evaluate and compare renewable energy projects based on ROI, NPV, and IRR calculations</li>
+        <li><strong>Software Productivity Analysis</strong> - To track and measure software development productivity across multiple projects</li>
+        <li><strong>PERT Analysis</strong> - To estimate task durations using the Program Evaluation and Review Technique</li>
+        <li><strong>Precedence Network</strong> - To visualize project task dependencies and critical paths</li>
+    </ol>
+
+    <h2>Code Snippets for Key Functions</h2>
+
+    <h3>ROI Calculation</h3>
+    <pre><code>// From utils/calculations.js
+export const calculateROI = (netProfit, investment, duration) => {
+  const averageAnnualProfit = netProfit / duration;
+  return (averageAnnualProfit / investment) * 100;
+};</code></pre>
+
+    <h3>NPV Detailed Calculation</h3>
+    <pre><code>// From app.py and reimplemented in frontend
+export const calculateNPVDetailed = (initialInvestment, annualCashflow, discountRate, duration) => {
+  const rate = discountRate / 100;
+  let npv = -initialInvestment;
+  const yearlyData = [];
+  
+  for (let t = 1; t <= duration; t++) {
+    const discountFactor = 1 / Math.pow(1 + rate, t);
+    const discountedCashflow = discountFactor * annualCashflow;
+    npv += discountedCashflow;
+    yearlyData.push([t, parseFloat(discountFactor.toFixed(4)), parseInt(discountedCashflow)]);
+  }
+  
+  return { npv, yearlyData };
+};</code></pre>
+
+    <h3>PERT Expected Time Calculation</h3>
+    <pre><code>// From PERTCalculator.tsx
+const expectedTime = (optimistic + 4 * mostLikely + pessimistic) / 6;</code></pre>
+
+    <h3>Project Productivity Calculation</h3>
+    <pre><code>// From utils/calculations.js
+export const calculateProductivity = (sloc, workMonths) => {
+  if (workMonths <= 0) return 0;
+  return sloc / workMonths;
+};</code></pre>
+
+    <h2>Tools/Technologies Used</h2>
+
+    <h3>Frontend</h3>
+    <ul>
+        <li><strong>React</strong> - JavaScript library for building user interfaces</li>
+        <li><strong>TypeScript</strong> - Typed superset of JavaScript for improved developer experience</li>
+        <li><strong>Tailwind CSS</strong> - Utility-first CSS framework for rapid UI development</li>
+        <li><strong>React Hot Toast</strong> - Notification library for React</li>
+        <li><strong>Lucide React</strong> - Icon library for React applications</li>
+    </ul>
+
+    <h3>Backend</h3>
+    <ul>
+        <li><strong>Flask</strong> - Python web framework for the backend server</li>
+        <li><strong>NumPy Financial</strong> - Library for financial calculations in Python</li>
+    </ul>
+
+    <h3>Deployment</h3>
+    <ul>
+        <li><strong>Vercel</strong> - Platform for frontend deployment</li>
+        <li><strong>Docker</strong> (potentially) - For containerization</li>
+    </ul>
+
+    <h3>Development Tools</h3>
+    <ul>
+        <li><strong>npm</strong> - Package manager for JavaScript/TypeScript dependencies</li>
+        <li><strong>Vite</strong> - Modern frontend build tool</li>
+        <li><strong>ESLint</strong> - JavaScript/TypeScript linting tool</li>
+        <li><strong>PostCSS</strong> - Tool for transforming CSS with JavaScript</li>
+    </ul>
+
+    <h2>Inputs Used for Testing New Features</h2>
+
+    <h3>Renewable Energy Analysis Input</h3>
+    <img src="assets/screenshots/Solar_Wind_project_input.png" alt="Renewable Energy Analysis Input Form" class="screenshot" onclick="openModal(this.src);">
+    <p class="image-caption">Input form for Solar and Wind project analysis with sample values</p>
+
+    <h3>Productivity Analysis Input</h3>
+    <img src="assets/screenshots/Productivity_input.png" alt="Productivity Analysis Input Form" class="screenshot" onclick="openModal(this.src);">
+    <p class="image-caption">Productivity tracking form with sample project data input</p>
+
+    <h3>PERT Analysis Input</h3>
+    <img src="assets/screenshots/PERT Evaluation Input.png" alt="PERT Analysis Input Form" class="screenshot" onclick="openModal(this.src);">
+    <p class="image-caption">PERT calculator form with sample task time estimates</p>
+
+    <h2>Screenshots of the Output</h2>
+
+    <h3>Renewable Energy Analysis Results</h3>
+    <img src="assets/screenshots/Solar_Wind_Project_Output.png" alt="Renewable Energy Analysis Results" class="screenshot" onclick="openModal(this.src);">
+    <p class="image-caption">Comparative results between Solar and Wind projects, including ROI, NPV, and IRR calculations</p>
+
+    <h3>Productivity Analysis Results</h3>
+    <img src="assets/screenshots/Productivity_output.png" alt="Productivity Analysis Results" class="screenshot" onclick="openModal(this.src);">
+    <p class="image-caption">Productivity metrics and comparison across multiple software projects</p>
+
+    <h3>PERT Analysis Results</h3>
+    <img src="assets/screenshots/PERT Evaluation Output.png" alt="PERT Analysis Results" class="screenshot" onclick="openModal(this.src);">
+    <p class="image-caption">Calculated expected times and variance based on PERT analysis</p>
+
+    <h3>Precedence Network Input</h3>
+    <img src="assets/screenshots/Precedence_Network_input.png" alt="Precedence Network Input Form" class="screenshot" onclick="openModal(this.src);">
+    <p class="image-caption">Input form for creating a Precedence Network with task dependencies</p>
+
+    <h3>Precedence Network Output</h3>
+    <img src="assets/screenshots/Precedence_Network_output.png" alt="Precedence Network Visualization" class="screenshot" onclick="openModal(this.src);">
+    <p class="image-caption">Visual representation of task dependencies in a project network</p>
+
+    <h2>Source Code Repository</h2>
+
+    <div style="background-color: #f8f9fa; border-left: 4px solid #3498db; padding: 15px; margin: 20px 0; border-radius: 4px;">
+        <p style="margin-bottom: 10px;"><strong>View Complete Source Code:</strong> This report includes only key code snippets for demonstration purposes. To explore the complete implementation, please visit the GitHub repository:</p>
+        <p style="text-align: center; margin: 15px 0;">
+            <a href="https://github.com/Rutwik2003/SPM-Analysis-Tools" target="_blank" style="display: inline-block; background-color: #24292e; color: white; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">
+                <span style="margin-right: 8px;">&#128187;</span>GitHub Repository: SPM-Analysis-Tools
+            </a>
+        </p>
+        <p style="font-size: 0.9em; margin-top: 10px;">The repository contains all source files, documentation, and implementation details of the modules discussed in this report.</p>
+    </div>
+
+    <h2>Future Scope</h2>
+
+    <p>The application has several areas for future enhancement:</p>
+
+    <ol>
+        <li><strong>Precedence Network Diagram</strong> - Fixing and improving the visualization of the precedence network diagram to better represent task dependencies</li>
+        <li><strong>PERT Evaluation Enhancement</strong> - Adding the diagram functionality for PERT analysis to visualize the critical path</li>
+        <li><strong>Integration with Project Management Tools</strong> - Adding API integration with tools like Jira, Trello, or Microsoft Project</li>
+        <li><strong>Machine Learning Integration</strong> - Implementing predictive analytics for better project estimations based on historical data</li>
+        <li><strong>Mobile Application</strong> - Developing a companion mobile app for on-the-go project management</li>
+        <li><strong>Multi-user Collaboration</strong> - Adding features for team collaboration and real-time updates</li>
+        <li><strong>Expanded Financial Analysis</strong> - Including more financial metrics for project evaluation</li>
+        <li><strong>Custom Dashboard</strong> - Creating a customizable dashboard for project managers to monitor multiple projects</li>
+    </ol>
+
+    <p>The primary immediate focus will be on fixing the Precedence Network diagram and adding the diagram for PERT Evaluation to enhance the project planning capabilities of the application.</p>
+
+    <div class="date">Submitted on: April 8, 2025</div>
+    <!-- Image Modal/Lightbox -->
+    <div id="imageModal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <div class="modal-container">
+            <img class="modal-content" id="modalImage">
+            <div class="zoom-controls">
+                <button class="zoom-btn" onclick="toggleZoom()">
+                    <span class="zoom-icon">🔍</span> Click to Zoom (Mouse Controls Pan)
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Get the modal and related elements
+        var modal = document.getElementById('imageModal');
+        var modalContainer = document.querySelector('.modal-container');
+        var modalImage = document.getElementById('modalImage');
+        var zoomed = false;
+        var zoomLevel = 1.8; // Reduced zoom level for better view
+        var lastX = 0;
+        var lastY = 0;
+        
+        // Open the modal with the clicked image
+        function openModal(src) {
+            modal.style.display = "block";
+            modalImage.src = src;
+            zoomed = false;
+            modalImage.style.transform = 'scale(1)';
+            modalImage.classList.remove('zoomed');
+            document.body.style.overflow = 'hidden'; // Prevent scrolling behind modal
+        }
+        
+        // Close the modal
+        function closeModal() {
+            modal.style.display = "none";
+            document.body.style.overflow = 'auto'; // Re-enable scrolling
+        }
+        
+        // Toggle zoom function
+        function toggleZoom() {
+            if (zoomed) {
+                // Reset zoom
+                modalImage.style.transition = 'transform 0.2s';
+                modalImage.style.transform = 'scale(1)';
+                modalImage.classList.remove('zoomed');
+                zoomed = false;
+            } else {
+                // Initial zoom (centered)
+                modalImage.style.transition = 'transform 0.2s';
+                modalImage.style.transform = 'scale(' + zoomLevel + ')';
+                modalImage.classList.add('zoomed');
+                zoomed = true;
+                
+                // On any device, set initial position to center
+                const rect = modalImage.getBoundingClientRect();
+                const centerX = rect.left + rect.width / 2;
+                const centerY = rect.top + rect.height / 2;
+                
+                // Create a synthetic mousemove event at center
+                const centerEvent = new MouseEvent('mousemove', {
+                    clientX: centerX,
+                    clientY: centerY
+                });
+                modalImage.dispatchEvent(centerEvent);
+            }
+        }
+        
+        // Handle mouse movement for dynamic zooming
+        modalImage.addEventListener('mousemove', function(e) {
+            if (!zoomed) return;
+            
+            // Calculate the relative position within the image
+            const rect = modalImage.getBoundingClientRect();
+            const x = (e.clientX - rect.left) / rect.width;
+            const y = (e.clientY - rect.top) / rect.height;
+            
+            // Calculate how much to move the image
+            // This improved approach keeps the point under your mouse cursor fixed
+            // Lower sensitivity means the image moves less with mouse movement
+            const sensitivity = 0.5;
+            
+            // Calculate movement percentages from center
+            // Constrain the values to prevent image from moving too far off-screen
+            const moveX = Math.max(Math.min((0.5 - x) * sensitivity, 0.25), -0.25) * 100;
+            const moveY = Math.max(Math.min((0.5 - y) * sensitivity, 0.25), -0.25) * 100;
+            
+            // Create transition temporarily to avoid jerky movement on first hover
+            modalImage.style.transition = 'transform 0.05s';
+            modalImage.style.transform = `scale(${zoomLevel}) translate(${moveX}%, ${moveY}%)`;
+            
+            // Remove transition after initial movement for smoother tracking
+            setTimeout(() => {
+                modalImage.style.transition = 'none';
+            }, 50);
+            
+            // Store the position for touchscreen handling
+            lastX = e.clientX;
+            lastY = e.clientY;
+        });
+        
+        // Add image click to trigger zoom
+        modalImage.onclick = function(e) {
+            // Don't close the modal when clicking the image
+            e.stopPropagation();
+            toggleZoom();
+        };
+        
+        // Close modal when clicking the background (not the image)
+        modalContainer.addEventListener('click', function(event) {
+            if (event.target === modalContainer) {
+                closeModal();
+            }
+        });
+        
+        modal.addEventListener('click', function(event) {
+            if (event.target === modal) {
+                closeModal();
+            }
+        });
+        
+        // Close when pressing Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === "Escape") {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
