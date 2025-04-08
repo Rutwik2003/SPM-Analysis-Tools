@@ -11,15 +11,6 @@ const Report: React.FC = () => {
           className="text-indigo-600 hover:text-indigo-800 mr-4"
         >
           ← Back to Application
-        </Link>
-        <a 
-          href="https://spm.rutwikdev.com" 
-          target="_blank" 
-          rel="noopener noreferrer"
-          className="text-green-600 hover:text-green-800 font-medium"
-        >
-          Visit Live Project Website →
-        </a>
       </div>
 
       <div className="bg-white shadow-lg rounded-lg p-6 mb-8">
